@@ -1,6 +1,8 @@
 # ansible-automated-deploy
 Deploying things automatically
 
+# Getting started
+Replace key_name in `master.tf` with your own AWS SSH key
 
 # ElasticSearch
 

@@ -4,10 +4,10 @@
 # Or, you can create separate playbooks in this directory for specific orchestration events.
 
 ---
-- name: apply common configuration to all nodes
-  hosts: all
-  user: root
+- hosts: all
+  remote_user: ec2-user
+  become: yes
+  become_user: root
 
   roles:
-    - common
-
+    - { role: elasticsearch }
