@@ -20,7 +20,7 @@
 # Update the Logstash config files
 - name: Create conf.d configuration of footprints config
   file:
-   path: "/etc/logstash/conf.d/logstash-footprints.conf"
+   path: /etc/logstash/conf.d/logstash-footprints.conf
    state: touch
 
 - name: Copy config content to file
