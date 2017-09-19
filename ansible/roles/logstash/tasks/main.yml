@@ -25,23 +25,23 @@
 
 - name: Copy config content to file
   lineinfile: /etc/logstash/conf.d/logstash-footprins.conf
-  regexp: ''
-  line: 'input {\ntcp {\nhost => "0.0.0.0"\nport => 9600\ncodec => json_lines \n}\nheartbeat {\ninterval => 10\ntype => "heartbeat"\n}\n}\noutput {\nelasticsearch { hosts => ["10.0.1.23:9200"] }\nstdout { codec => rubydebug }\n}'
+   regexp: ''
+   line: 'input {\ntcp {\nhost => "0.0.0.0"\nport => 9600\ncodec => json_lines \n}\nheartbeat {\ninterval => 10\ntype => "heartbeat"\n}\n}\noutput {\nelasticsearch { hosts => ["10.0.1.23:9200"] }\nstdout { codec => rubydebug }\n}'
 
 - name: Update the config file to set REST endpoint
   lineinfile: /etc/logstash/logstash.yml
-  regexp: 'http.host:'
-  line: 'http.host: 0.0.0.0'
+   regexp: 'http.host:'
+   line: 'http.host: 0.0.0.0'
 
 - name: Update the config file to set REST endpoint port
   lineinfile: /etc/logstash/logstash.yml
-  regexp: 'http.port:'
-  line: 'http.port: 9600-9700'
+   regexp: 'http.port:'
+   line: 'http.port: 9600-9700'
 
 - name: Update the config file to set path to logstash logs
   lineinfile: /etc/logstash/logstash.yml
-  regexp: 'path.logs:'
-  line: 'path.logs: /var/logs/logstash'
+   regexp: 'path.logs:'
+   line: 'path.logs: /var/logs/logstash'
 
 - name: Updating the config file to decrease JVM min heap space
   lineinfile:
@@ -51,5 +51,5 @@
 
 - name: Restarting Logstash
   service:
-    name: logstash
-    state: restarted
+   name: logstash
+   state: restarted
