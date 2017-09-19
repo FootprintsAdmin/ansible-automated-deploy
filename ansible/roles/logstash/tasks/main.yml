@@ -2,8 +2,7 @@
 #
 # Installing Logstash
 #
-
-- name: Add Logstash GPG key
+- name: Add Elasticsearch GPG key
   rpm_key:
     key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
     state: present
@@ -18,33 +17,36 @@
   yum: pkg=logstash state=installed
 
 # Update the Logstash config files
-- name: Copy config content to file
+- name: Copy footprints logstash config file
   copy:
-    src: ~/ansible-automated-deploy/ansible/files/logstash-footprints.conf
-    dest: /etc/logstash/conf.d/logstash-footprints.conf
+   src: ~/ansible-automated-deploy/ansible/files/logstash-footprints.conf
+   dest: /etc/logstash/conf.d/logstash-footprints.conf
 
 - name: Update the config file to set REST endpoint
-  lineinfile: /etc/logstash/logstash.yml
+  lineinfile:
+    destfile: /etc/logstash/logstash.yml
     regexp: 'http.host:'
     line: 'http.host: 0.0.0.0'
 
 - name: Update the config file to set REST endpoint port
-  lineinfile: /etc/logstash/logstash.yml
+  lineinfile:
+    destfile: /etc/logstash/logstash.yml
     regexp: 'http.port:'
     line: 'http.port: 9600-9700'
 
 - name: Update the config file to set path to logstash logs
-  lineinfile: /etc/logstash/logstash.yml
+  lineinfile:
+    destfile: /etc/logstash/logstash.yml
     regexp: 'path.logs:'
     line: 'path.logs: /var/logs/logstash'
 
 - name: Updating the config file to decrease JVM min heap space
   lineinfile:
-    destfile: /etc/logstash/jvm.options
-    regexp: '-Xms2g'
-    line: '-Xms512m'
+   destfile: /etc/logstash/jvm.options
+   regexp: '-Xms2g'
+   line: '-Xms512m'
 
 - name: Restarting Logstash
   service:
-    name: logstash
-    state: restarted
+   name: logstash
+   state: restarted
