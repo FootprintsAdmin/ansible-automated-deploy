@@ -5,51 +5,66 @@
 
 - name: Add Logstash GPG key
   rpm_key:
-   key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
-   state: present
+    key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
 
 - name: Adding Elasticsearch yum repository
   copy:
-   src: elasticsearch.repo
-   dest: /etc/yum.repos.d/elasticsearch.repo
-   mode: 0644
+    src: elasticsearch.repo
+    dest: /etc/yum.repos.d/elasticsearch.repo
+    mode: 0644
 
 - name: Update repositories cache and install Logstash
   yum: pkg=logstash state=installed
 
-# Update the Logstash config files
+  # Update the Logstash config files
 - name: Create conf.d configuration of footprints config
   file:
-   path: /etc/logstash/conf.d/logstash-footprints.conf
-   state: touch
+    path: /etc/logstash/conf.d/logstash-footprints.conf
+    state: touch
 
 - name: Copy config content to file
-  lineinfile:
-   dest: /etc/logstash/conf.d/logstash-footprints.conf
-   line: 'input {\ntcp {\nhost => "0.0.0.0"\nport => 9600\ncodec => json_lines \n}\nheartbeat {\ninterval => 10\ntype => "heartbeat"\n}\n}\noutput {\nelasticsearch { hosts => ["10.0.1.23:9200"] }\nstdout { codec => rubydebug }\n}'
+  blockinfile:
+    path: /etc/logstash/conf.d/logstash-footprints.conf
+    block:  |
+      input {
+        tcp {
+          host => "0.0.0.0"
+          port => 9600
+          codec => json_lines
+        }
+        heartbeat {
+          interval => 10
+          type => "heartbeat"
+        }
+      }
+      output {
+        elasticsearch { hosts => ["10.0.1.23:9200"] }
+        stdout { codec => rubydebug }
+      }
 
 - name: Update the config file to set REST endpoint
   lineinfile: /etc/logstash/logstash.yml
-   regexp: 'http.host:'
-   line: 'http.host: 0.0.0.0'
+  regexp: 'http.host:'
+  line: 'http.host: 0.0.0.0'
 
 - name: Update the config file to set REST endpoint port
   lineinfile: /etc/logstash/logstash.yml
-   regexp: 'http.port:'
-   line: 'http.port: 9600-9700'
+  regexp: 'http.port:'
+  line: 'http.port: 9600-9700'
 
 - name: Update the config file to set path to logstash logs
   lineinfile: /etc/logstash/logstash.yml
-   regexp: 'path.logs:'
-   line: 'path.logs: /var/logs/logstash'
+  regexp: 'path.logs:'
+  line: 'path.logs: /var/logs/logstash'
 
 - name: Updating the config file to decrease JVM min heap space
   lineinfile:
-   destfile: /etc/logstash/jvm.options
-   regexp: '-Xms2g'
-   line: '-Xms512m'
+    destfile: /etc/logstash/jvm.options
+    regexp: '-Xms2g'
+    line: '-Xms512m'
 
 - name: Restarting Logstash
   service:
-   name: logstash
-   state: restarted
+    name: logstash
+    state: restarted
