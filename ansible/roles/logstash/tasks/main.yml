@@ -24,9 +24,9 @@
    state: touch
 
 - name: Copy config content to file
-  lineinfile: /etc/logstash/conf.d/logstash-footprins.conf
-   regexp: ''
-   line: 'input {\ntcp {\nhost => "0.0.0.0"\nport => 9600\ncodec => json_lines \n}\nheartbeat {\ninterval => 10\ntype => "heartbeat"\n}\n}\noutput {\nelasticsearch { hosts => ["10.0.1.23:9200"] }\nstdout { codec => rubydebug }\n}'
+  copy:
+   content: 'input {\ntcp {\nhost => "0.0.0.0"\nport => 9600\ncodec => json_lines \n}\nheartbeat {\ninterval => 10\ntype => "heartbeat"\n}\n}\noutput {\nelasticsearch { hosts => ["10.0.1.23:9200"] }\nstdout { codec => rubydebug }\n}'
+   dest: /etc/logstash/conf.d/logstash-footprints.conf
 
 - name: Update the config file to set REST endpoint
   lineinfile: /etc/logstash/logstash.yml
