@@ -31,7 +31,7 @@
 - name: Update the config file to set REST endpoint
   lineinfile: /etc/logstash/logstash.yml
   regexp: 'http.host:'
-  line: 'http.host: "0.0.0.0"'
+  line: 'http.host: 0.0.0.0'
 
 - name: Update the config file to set REST endpoint port
   lineinfile: /etc/logstash/logstash.yml
