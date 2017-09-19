@@ -4,19 +4,20 @@
 #
 # Adds the apt-key for Elasticsearch
 - name: Add Elasticsearch apt-key
-  apt_key:
-   url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+  rpm_key:
+   key: "https://packages.elastic.co/GPG-KEY-elasticsearch"
    state: present
 # Add the Elasticsearch APT-repository
 - name: Adding Elasticsearch APT repository
-  apt_repository:
-   repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
-   state: present
+  copy:
+   src: elasticsearch.repo
+   dest: /etc/yum.repos.d/elasticsearch.repo
+   mode: 0644
+
 # Install Elasticsearch
 - name: Update repositories cache and install Elasticsearch
-  apt:
-   name: elasticsearch
-   update_cache: yes
+  yum: pkg=elasticsearch state=installed
+
 # Update Elasticsearch config file to only allow localhost connections
 - name: Updating the config file to restrict outside access
   lineinfile:
