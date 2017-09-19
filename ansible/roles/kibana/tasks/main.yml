@@ -1,0 +1,53 @@
+---
+#
+# Installing Kibana
+#
+
+- name: Add Elasticsearch GPG key
+  rpm_key:
+   key: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+   state: present
+
+- name: Adding Elasticsearch yum repository
+  copy:
+   src: elasticsearch.repo
+   dest: /etc/yum.repos.d/elasticsearch.repo
+   mode: 0644
+
+- name: Update repositories cache and install Kibana
+  yum: pkg=kibana state=installed
+
+- name: Bind Kibana to address
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'server.host:'
+   line: 'server.host: 0.0.0.0'
+
+- name: Set Kibana port
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'server.port: 5601'
+   line: 'server.host: 0.0.0.0'
+
+- name: Set Kibana server name
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'server.name:'
+   line: 'server.name: footprints-kibana'
+
+- name: Set the url for the elasticearch instance
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'elasticsearch.url:'
+   line: 'elasticsearch.url: "10.0.1.23:9200"'
+
+- name: Updating the config file to decrease JVM min heap space
+  lineinfile:
+   destfile: /etc/kibana/jvm.options
+   regexp: '-Xms2g'
+   line: '-Xms512m'
+
+- name: Restarting Kibana
+  service:
+   name: kibana
+   state: restarted
