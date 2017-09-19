@@ -1,0 +1,13 @@
+---
+#
+# Installing Java 8
+#
+- name: Install Java
+  yum: pkg=java-1.8.0-openjdk.x86_64 state=installed
+
+- name: Make Java 8 available
+  command: 'alternatives --install /usr/bin/java java /usr/bin/java8 18000'
+
+- name: Make Java 8 the default option
+  command: 'alternatives --set java /usr/bin/java8'
+

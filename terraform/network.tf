@@ -67,14 +67,14 @@ resource "aws_security_group" "elasticsearch_sg" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    security_groups = [ "${aws_security_group.logstash_sg.id}", "${aws_security_group.master_sg.id}" ]
+    security_groups = [ "${aws_security_group.master_sg.id}" ]
   }
 
   ingress {
     from_port = 9200
     to_port = 9200
     protocol = "tcp"
-    security_groups = [ "${aws_security_group.kibana_sg.id}" ]
+    security_groups = [ "${aws_security_group.logstash_sg.id}", "${aws_security_group.kibana_sg.id}" ]
   }
 
   egress {

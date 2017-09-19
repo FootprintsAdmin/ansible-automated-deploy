@@ -2,29 +2,39 @@
 #
 # Installing Elasticsearch
 #
-# Adds the apt-key for Elasticsearch
-- name: Add Elasticsearch apt-key
+- name: Add Elasticsearch GPG key
   rpm_key:
    key: "https://packages.elastic.co/GPG-KEY-elasticsearch"
    state: present
-# Add the Elasticsearch APT-repository
-- name: Adding Elasticsearch APT repository
+
+- name: Adding Elasticsearch yum repository
   copy:
    src: elasticsearch.repo
    dest: /etc/yum.repos.d/elasticsearch.repo
    mode: 0644
 
-# Install Elasticsearch
 - name: Update repositories cache and install Elasticsearch
   yum: pkg=elasticsearch state=installed
 
-# Update Elasticsearch config file to only allow localhost connections
+# Update Elasticsearch config file to only any connections
 - name: Updating the config file to restrict outside access
   lineinfile:
    destfile: /etc/elasticsearch/elasticsearch.yml
    regexp: 'network.host:'
    line: 'network.host: 0.0.0.0'
-# Restart Elasticsearch
+
+- name: Updating the config file to decrease JVM min heap space
+  lineinfile:
+   destfile: /etc/elasticsearch/jvm.options
+   regexp: '-Xms2g'
+   line: '-Xms512m'
+
+- name: Updating the config file to decrease JVM max heap space
+  lineinfile:
+   destfile: /etc/elasticsearch/jvm.options
+   regexp: '-Xmx2g'
+   line: '-Xmx512m'
+
 - name: Restarting Elasticsearch
   service:
    name: elasticsearch
