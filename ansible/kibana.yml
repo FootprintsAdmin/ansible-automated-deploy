@@ -1,5 +1,4 @@
 ---
-
 - hosts: kibana
   remote_user: ec2-user
   become: yes
@@ -8,4 +7,3 @@
   roles:
     - { role: java }
     - { role: kibana }
-
