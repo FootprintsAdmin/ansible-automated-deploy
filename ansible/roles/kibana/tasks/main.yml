@@ -14,6 +14,9 @@
    dest: /etc/yum.repos.d/elasticsearch.repo
    mode: 0644
 
+- name: Uninstall kibana
+  yum: pkg=kibana state=removed
+
 - name: Update repositories cache and install Kibana
   yum: pkg=kibana state=installed
 
@@ -39,7 +42,10 @@
   lineinfile:
    destfile: /etc/kibana/kibana.yml
    regexp: 'elasticsearch.url:'
-   line: 'elasticsearch.url: "10.0.1.23:9200"'
+   line: 'elasticsearch.url: http://10.0.1.23:9200'
+
+- name: Register kibana as a service
+  command: chkconfig --add kibana
 
 - name: Restarting Kibana
   service:
