@@ -41,12 +41,6 @@
    regexp: 'elasticsearch.url:'
    line: 'elasticsearch.url: "10.0.1.23:9200"'
 
-- name: Updating the config file to decrease JVM min heap space
-  lineinfile:
-   destfile: /etc/kibana/jvm.options
-   regexp: '-Xms2g'
-   line: '-Xms512m'
-
 - name: Restarting Kibana
   service:
    name: kibana
