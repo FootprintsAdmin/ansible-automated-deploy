@@ -4,6 +4,6 @@
 # Or, you can create separate playbooks in this directory for specific orchestration events.
 
 ---
-- include: logstash.yml
 - include: elasticsearch.yml
 - include: kibana.yml
+- include: logstash.yml
