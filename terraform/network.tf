@@ -4,6 +4,7 @@ provider "aws" {
 
 resource "aws_vpc" "footprints_elk_vpc" {
   cidr_block = "10.0.1.0/24"
+  enable_dns_hostnames = true
 }
 
 resource "aws_subnet" "public_subnet_1" {

@@ -5,7 +5,6 @@ resource "aws_instance" "elasticsearch" {
   key_name = "footprints-client"
   instance_type = "t2.micro"
   vpc_security_group_ids = ["${aws_security_group.elasticsearch_sg.id}"]
-  public_dns = true
 }
 
 output "elasticsearch.private_ip" {
