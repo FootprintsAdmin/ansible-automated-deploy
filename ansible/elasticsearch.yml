@@ -7,4 +7,3 @@
   roles:
     - { role: java }
     - { role: elasticsearch }
-    - { role: elastalert }
