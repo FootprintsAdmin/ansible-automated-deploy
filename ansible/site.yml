@@ -4,31 +4,7 @@
 # Or, you can create separate playbooks in this directory for specific orchestration events.
 
 ---
-- hosts: elasticsearch
-  remote_user: ec2-user
-  become: yes
-  become_user: root
 
-  roles:
-    - { role: java }
-    - { role: elasticsearch }
-
-- hosts: logstash
-  remote_user: ec2-user
-  become: yes
-  become_user: root
-
-  roles:
-    - { role: java }
-    - { role: logstash }
-
-- hosts: kibana
-  remote_user: ec2-user
-  become: yes
-  become_user: root
-
-  roles:
-    - { role: java }
-    - { role: kibana }
-
-
+- include: elasticsearch.yml
+- include: logstash.yml
+- include: kibana.yml
