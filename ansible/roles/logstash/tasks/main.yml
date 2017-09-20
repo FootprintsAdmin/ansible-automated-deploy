@@ -25,6 +25,18 @@
    src: ~/ansible-automated-deploy/ansible/files/logstash-footprints.conf
    dest: /etc/logstash/conf.d/logstash-footprints.conf
 
+- name: Updating the config file to decrease JVM min heap space
+  lineinfile:
+   destfile: /etc/logstash/jvm.options
+   regexp: '-Xms'
+   line: '-Xms512m'
+
+- name: Updating the config file to decrease JVM max heap space
+  lineinfile:
+   destfile: /etc/logstash/jvm.options
+   regexp: '-Xmx'
+   line: '-Xmx512m'
+
 - name: Update the config file to set REST endpoint
   lineinfile:
     destfile: /etc/logstash/logstash.yml
