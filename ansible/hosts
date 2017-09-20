@@ -1,8 +1,8 @@
-[elasticsearch]
-10.0.1.23 ansible_ssh_private_key_file=~/.ssh/my-key.pem
-
 [logstash]
 10.0.1.36 ansible_ssh_private_key_file=~/.ssh/my-key.pem
+
+[elasticsearch]
+10.0.1.23 ansible_ssh_private_key_file=~/.ssh/my-key.pem
 
 [kibana]
 10.0.1.18 ansible_ssh_private_key_file=~/.ssh/my-key.pem
