@@ -26,8 +26,8 @@
 - name: Set Kibana port
   lineinfile:
    destfile: /etc/kibana/kibana.yml
-   regexp: 'server.port: 5601'
-   line: 'server.host: 0.0.0.0'
+   regexp: 'server.port:'
+   line: 'server.port: 5601'
 
 - name: Set Kibana server name
   lineinfile:
