@@ -14,3 +14,7 @@ output "master_chief.private_ip" {
 output "master_chief.public_ip" {
   value = "${aws_instance.master_chief.public_ip}"
 }
+
+output "master_chief.dns" {
+  value = "${aws_instance.master_chief.public_dns}"
+}
