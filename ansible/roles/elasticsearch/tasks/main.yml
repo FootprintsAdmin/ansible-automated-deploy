@@ -35,6 +35,11 @@
    regexp: '-Xmx2g'
    line: '-Xmx512m'
 
+- name: Register elasticsearch as a service
+  copy:
+    src: files/elasticsearch_service
+    dest: /etc/init.d/elasticsearch
+
 - name: Restarting Elasticsearch
   service:
    name: elasticsearch
