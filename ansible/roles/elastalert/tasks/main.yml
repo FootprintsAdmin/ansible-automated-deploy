@@ -1,0 +1,36 @@
+---
+#
+# Installing Elastalert
+#
+- name: Install python dev tools
+  yum: pkg={{item}} state=installed
+  with_items:
+    - python27-devel.x86_64
+    - libffi-devel.x86_64
+
+- name: Install elastalert
+  pip:
+    name: elastalert
+
+- name: Create rules folder for elastalert
+  file: path=~/rules_folder state=directory
+
+- name: Copy heartbeat rule
+  copy:
+    src: heartbeat_alert.yml
+    dest: ~/rules_folder/heartbeat_alert.yml
+
+- name: Copy smtp auth
+  copy:
+    src: smtp_auth.yml
+    dest: ~/smtp_auth.yml
+
+- name: Copy elastalert config file
+  copy:
+    src: elastalert_config.yml
+    dest: ~/elastalert_config.yml
+
+- name: Restarting elastalert
+  service:
+    name: elastalert
+    state: restarted

@@ -1,0 +1,20 @@
+name: Heartbeat rule
+type: frequency
+index: logstash-*
+num_events: 1
+timeframe:
+ hours: 24
+realert:
+ hours: 24
+filter:
+- term:
+   type: heartbeat
+smtp_host: in-v3.mailjet.com
+smtp_auth_file: /home/ubuntu/smtp_auth.yaml
+alert:
+- email
+from_addr: "mitch.joa@yello.co"
+email:
+- "mitch.joa@yello.co"
+- "trent.kan@yello.co"
+- "kannen@8thlight.com"
