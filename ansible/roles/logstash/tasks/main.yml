@@ -13,6 +13,9 @@
     dest: /etc/yum.repos.d/elasticsearch.repo
     mode: 0644
 
+- name: Uninstall logstash
+  yum: pkg=logstash state=removed
+
 - name: Update repositories cache and install Logstash
   yum: pkg=logstash state=installed
 
@@ -45,6 +48,9 @@
    destfile: /etc/logstash/jvm.options
    regexp: '-Xms2g'
    line: '-Xms512m'
+
+- name: Register logstash as a service
+  command: initctl start logstash
 
 - name: Restarting Logstash
   service:
