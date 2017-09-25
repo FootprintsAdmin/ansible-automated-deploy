@@ -47,7 +47,7 @@
   lineinfile:
     destfile: /etc/logstash/logstash.yml
     regexp: 'http.port:'
-    line: 'http.port: 9600-9700'
+    line: 'http.port: 9600'
 
 - name: Update the config file to set path to logstash logs
   lineinfile:

@@ -138,7 +138,7 @@ resource "aws_security_group" "logstash_sg" {
   ingress {
     from_port = 9600
     to_port = 9600
-    protocol = "tcp"
+    protocol = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
