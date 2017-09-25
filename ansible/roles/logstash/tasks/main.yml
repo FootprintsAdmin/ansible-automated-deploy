@@ -53,7 +53,7 @@
   lineinfile:
     destfile: /etc/logstash/logstash.yml
     regexp: 'path.logs:'
-    line: 'path.logs: /var/logs/logstash'
+    line: 'path.logs: /var/log/logstash'
 
 - name: Updating the config file to decrease JVM min heap space
   lineinfile:

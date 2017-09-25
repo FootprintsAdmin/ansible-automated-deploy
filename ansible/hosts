@@ -2,7 +2,7 @@
 10.0.1.36 ansible_ssh_private_key_file=~/.ssh/footprints-client.pem
 
 [elasticsearch]
-10.0.1.23 ansible_ssh_private_key_file=~/.ssh/footprints-client.pem
+10.0.1.11 ansible_ssh_private_key_file=~/.ssh/footprints-client.pem
 
 [kibana]
 10.0.1.18 ansible_ssh_private_key_file=~/.ssh/footprints-client.pem

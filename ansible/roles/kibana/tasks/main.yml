@@ -42,7 +42,7 @@
   lineinfile:
    destfile: /etc/kibana/kibana.yml
    regexp: 'elasticsearch.url:'
-   line: 'elasticsearch.url: http://10.0.1.23:9200'
+   line: 'elasticsearch.url: http://10.0.1.11:9200'
 
 - name: Register kibana as a service
   command: chkconfig --add kibana
